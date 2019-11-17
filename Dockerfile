@@ -1,18 +1,13 @@
-FROM node:lts-alpine
+#To build this image type: docker build -t wallandall/my-flix:latest .
+#To run image typer: docker run -p 8080:8080 wallandall/my-flix
+FROM node
 
-EXPOSE 8000
+WORKDIR /usr/app
 
-RUN apk add --no-cache tini
-
-WORKDIR /usr/src/app
-WORKDIR /usr/src/app
-
-COPY package*.json ./
+COPY package*.json .
 
 RUN npm install && npm cache clean --force
 
 COPY . .
-
-ENTRYPOINT ["tini", "--"]
 
 CMD ["node", "server.js"]
