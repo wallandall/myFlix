@@ -103,6 +103,84 @@ let movies = [
   }
 ];
 
+let users = [
+  {
+    id: "0",
+    name: "Test1",
+    username: "TestOne",
+    password: "123456",
+    email: "test@one.com",
+    favourites: []
+  },
+  {
+    id: "1",
+    name: "Test2",
+    username: "TestTwo",
+    password: "123456",
+    email: "test@two.com",
+    favourites: ["4"]
+  },
+  {
+    id: "3",
+    name: "Test3",
+    username: "TestThree",
+    password: "123456",
+    email: "test@three.com",
+    favourites: ["1", "6"]
+  }
+];
+
+let genre = [
+  {
+    id: "0",
+    title: "Action",
+    description:
+      "Action films tend to feature a resourceful hero struggling against incredible odds, which include life-threatening situations, a villain, or a pursuit which usually concludes in victory for the hero "
+  },
+  {
+    id: "1",
+    title: "Crime",
+    description:
+      "Crime films, in the broadest sense, are a cinematic genre inspired by and analogous to the crime fiction literary genre. Films of this genre generally involve various aspects of crime and its detection. "
+  },
+  {
+    id: "2",
+    title: "Comedy",
+    description:
+      "A comedy film is a genre of film in which the main emphasis is on humor."
+  }
+];
+
+let directors = [
+  {
+    id: "0",
+    name: "Ridley",
+    surname: "Scott",
+    bio:
+      " Sir Ridley Scott (born 30 November 1937)is an English filmmaker. Following his commercial breakthrough in 1979 with the science fiction horror film Alien, further works include the neo-noir dystopian film Blade Runner, the road adventure film Thelma & Louise, the historical drama Gladiator (which won the Academy Award for Best Picture) and the science fiction film The Martian.",
+    birth: "30/11/1937",
+    death: ""
+  },
+  {
+    id: "1",
+    name: "Martin",
+    surname: "Scorsese",
+    bio:
+      "Martin Charles Scorsese Italian: [skorˈseːze; -eːse]; born November 17, 1942) is an American-Italian filmmaker, actor and historian, whose career spans more than 50 years. Part of the New Hollywood wave of filmmaking, he is widely regarded as one of the most significant and influential filmmakers in cinematic history. Scorsese's body of work explores such themes as Italian-American identity, Roman Catholic concepts of guilt and redemption, faith, machismo, modern crime, and gang conflict. Many of his films are also known for their depiction of violence and liberal use of profanity. In 1990, he founded The Film Foundation, a nonprofit organization dedicated to film preservation, and in 2007 he founded the World Cinema Foundation. He is a recipient of the AFI Life Achievement Award for his contributions to the cinema, and has won an Academy Award, a Palme d'Or, Cannes Film Festival Best Director Award, Silver Lion, Grammy Award, Emmys, Golden Globes, BAFTAs, and Directors Guild of America Awards.",
+    birth: "17/11/1945",
+    death: ""
+  },
+  {
+    id: "2",
+    name: "Steven",
+    surname: "Spielberg",
+    bio:
+      "Steven Allan Spielberg (/ˈspiːlbɜːrɡ/; born December 18, 1946) is an American filmmaker. He is considered one of the founding pioneers of the New Hollywood era and one of the most popular directors and producers in film history. Spielberg started in Hollywood directing television and several minor theatrical releases. He became a household name as the director of Jaws (1975), which was critically and commercially successful and is considered the first summer blockbuster. His subsequent releases focused typically on science fiction/adventure films such as Close Encounters of the Third Kind (1977), Raiders of the Lost Ark (1981), E.T. the Extra-Terrestrial (1982), and Jurassic Park (1993), which became archetypes of modern Hollywood escapist filmmaking.",
+    birth: "18/12/1946",
+    death: ""
+  }
+];
+
 app.use(morgan("common"));
 app.use(express.static("public"));
 
@@ -112,6 +190,50 @@ app.get("/", function(req, res) {
 
 app.get("/movies", function(req, res) {
   res.json(movies);
+});
+
+app.get("/movies/:title", function(req, res) {
+  res.send("Successful GET request returning movie title");
+});
+
+app.post("/movies", function(req, res) {
+  res.send("Successful POST request movie added");
+});
+
+app.get("/genre", function(req, res) {
+  res.json(genre);
+});
+
+app.post("/genre", function(req, res) {
+  res.send("Successful POST request genre added");
+});
+
+app.get("/directors", function(req, res) {
+  res.json(directors);
+});
+
+app.post("/directors", function(req, res) {
+  res.send("Successful POST request director added");
+});
+
+app.get("/users", function(req, res) {
+  res.json(users);
+});
+
+app.post("/users/:username", function(req, res) {
+  res.send("Successful POST request user added");
+});
+
+app.post("/users/:username/:id", function(req, res) {
+  res.send("Successful POST request favourite added");
+});
+
+app.put("/users/:username", function(req, res) {
+  res.send("Successful PUT request user updated");
+});
+
+app.delete("/users/:username", function(req, res) {
+  res.send("Successful DELET request user deleted");
 });
 
 app.get("/documentation", function(req, res) {
