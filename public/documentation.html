@@ -69,93 +69,11 @@
               }
               </p>
             </td>
-          </tr>
+          </tr>   
           <tr>
-            <td>Create a new movie</td>
-            <td>POST</td>
-            <td>/movies</td>            
-            <td>
-              A JSON object containing a movie title, imageUrl, actors, realeaseyear, description, duration,
-              genere, director and fetured properties
-            <p>
-              { 
-              movieName: "Karyasthan",
-              actor: "Dileep,Akhila,Madhu,Salim Kumar,Suraj Venjaramood,Vandana Menon",
-              releaseyear: "2010",
-              description: "The story is set in a picturesque landscape in a village called Krishnapuram. The two tharavadu are
-              situated in the
-              same compound. The film begins with the celebration of onam festival by the inmates of both the houses. Krishna
-              warrier
-              (Madhu)'s son Raajan (Siddique)is in love with one of the girls there but his marriage is fixed with Saraswathy
-              (Lena),daughter of the karanavar of Puthezhath. Rajan and the girl elopes. But Puthezhath people tries to stop
-              them,but
-              Krishnawarrier comes and rescues and also pulls him up on to the train. As years pass,Krishnanunni is born to
-              Raajan.",
-              duration: "2:41:54",
-              genre: "Comedy",
-              director: "Dileep,Akhila",
-              featured: true
-              }
-            </p></td>
-            <td>
-              A JSON object containing a movie id, title, imageUrl, actors, realeaseyear, description, duration,
-              genere, director and fetured properties
-              <p>
-                { <br>
-                id: 1,
-                movieName: "Karyasthan",
-                actor: "Dileep,Akhila,Madhu,Salim Kumar,Suraj Venjaramood,Vandana Menon",
-                releaseyear: "2010",
-                description: "The story is set in a picturesque landscape in a village called Krishnapuram. The two tharavadu are
-                situated in the
-                same compound. The film begins with the celebration of onam festival by the inmates of both the houses. Krishna
-                warrier
-                (Madhu)'s son Raajan (Siddique)is in love with one of the girls there but his marriage is fixed with Saraswathy
-                (Lena),daughter of the karanavar of Puthezhath. Rajan and the girl elopes. But Puthezhath people tries to stop
-                them,but
-                Krishnawarrier comes and rescues and also pulls him up on to the train. As years pass,Krishnanunni is born to
-                Raajan.",
-                duration: "2:41:54",
-                genre: "Comedy",
-                director: "Dileep,Akhila",
-                featured: true
-                }
-            </td>
-          </tr>
-      
-          <tr>
-            <td>Add a new genere</td>
-            <td>POST</td>
-            <td>/genere</td>            
-            <td>
-              A JSON object containing genere title, description
-              <p>
-                {
-                id: "0",
-                title: "Action",
-                description:
-                "Action films tend to feature a resourceful hero struggling against incredible odds, which include life-threatening
-                situations, a villain, or a pursuit which usually concludes in victory for the hero "
-                }
-              </p>
-            </td>
-            <td>
-              A JSON object containing genere id, title, description
-              <p>
-                {
-                id: "0",
-                title: "Action",
-                description:
-                "Action films tend to feature a resourceful hero struggling against incredible odds, which include life-threatening
-                situations, a villain, or a pursuit which usually concludes in victory for the hero "
-                }
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td>Get the genre title eg: Action, Thriller, Romance </td>
+            <td>Get the data about a genre by title eg: Action, Thriller, Romance </td>
             <td>GET</td>
-            <td>/genere/[title]</td>            
+            <td>movies/genere/[name]</td>            
             <td>None</td>
             <td>
               A JSON object containing genere id, title, description
@@ -163,8 +81,8 @@
               <p>
                 {
                 id: "0",
-                title: "Action",
-                description:
+                Name: "Action",
+                Description:
                 "Action films tend to feature a resourceful hero struggling against incredible odds, which include life-threatening
                 situations, a villain, or a pursuit which usually concludes in victory for the hero "
                 }
@@ -173,9 +91,9 @@
             </td>
           </tr>
           <tr>
-            <td>Get info about a director eg: bio, birth year, death year</td>
+            <td>Get info about a director by name eg: bio, birth year, death year</td>
             <td>GET</td>
-            <td>/directors/[name]</td>           
+            <td>/movies/directors/[name]</td>           
             <td>None</td>
             <td>
               A JSON object containing actor id, name, surname, bio, birth and death
@@ -183,56 +101,14 @@
               <p>
                 {
                 id: "0",
-                name: "Ridley",
-                surname: "Scott",
-                bio:
+                Name: "Ridley Scott",
+                Bio:
                 " Sir Ridley Scott (born 30 November 1937)is an English filmmaker. Following his commercial breakthrough in 1979 with
                 the science fiction horror film Alien, further works include the neo-noir dystopian film Blade Runner, the road
                 adventure film Thelma & Louise, the historical drama Gladiator (which won the Academy Award for Best Picture) and the
                 science fiction film The Martian.",
-                birth: "30/11/1937",
-                death: ""
-                }
-              </p>
-
-            </td>
-          </tr>
-          <tr>
-            <td>Add a director</td>
-            <td>POST</td>
-            <td>/directors</td>            
-            <td>
-              A JSON object containing actor name, surname, bio, birth and death.
-
-             <p>
-                {
-                name: "Ridley",
-                surname: "Scott",
-                bio:
-                " Sir Ridley Scott (born 30 November 1937)is an English filmmaker. Following his commercial breakthrough in 1979 with
-                the science fiction horror film Alien, further works include the neo-noir dystopian film Blade Runner, the road
-                adventure film Thelma & Louise, the historical drama Gladiator (which won the Academy Award for Best Picture) and the
-                science fiction film The Martian.",
-                birth: "30/11/1937",
-                death: ""
-                }
-             </p>
-            </td>
-            <td>
-              A JSON object containing actor id, name, surname, bio, birth and death.
-
-              <p>
-                {
-                id: 12,
-                name: "Ridley",
-                surname: "Scott",
-                bio:
-                " Sir Ridley Scott (born 30 November 1937)is an English filmmaker. Following his commercial breakthrough in 1979 with
-                the science fiction horror film Alien, further works include the neo-noir dystopian film Blade Runner, the road
-                adventure film Thelma & Louise, the historical drama Gladiator (which won the Academy Award for Best Picture) and the
-                science fiction film The Martian.",
-                birth: "30/11/1937",
-                death: ""
+                Birth: "30/11/1937",
+                Death: ""
                 }
               </p>
 
@@ -254,11 +130,10 @@
 
               <p>
                 {
-                name: "Test2",
-                username: "TestTwo",
-                password: "123456",
-                email: "test@two.com",
-                favourites: ["4"]
+                Name: "Test2",
+                Username: "TestTwo",
+                Password: "123456",
+                Email: "test@two.com"
                 }
               </p>
             </td>
@@ -268,11 +143,10 @@
               <p>
                 {
                 id: "55",
-                name: "Test2",
-                username: "TestTwo",
-                password: "123456",
-                email: "test@two.com",
-                favourites: ["4"]
+                Name: "Test2",
+                Username: "TestTwo",
+                Password: "123456",
+                Email: "test@two.com"
                 }
               </p>
             </td>
@@ -280,7 +154,7 @@
           <tr>
             <td>Add a movie to a users favourites</td>
             <td>POST</td>            
-            <td>/users/[username]/[id]</td>            
+            <td>/users/[username]/Movies/[MovieID]</td>            
             <td>None</td>
             <td>
               A text message indicating the movie was added successfuly.
@@ -291,7 +165,14 @@
             <td>Update user information</td>
             <td>PUT</td>
             <td>/users/[username]</td>            
-            <td>None</td>
+            <td><p>
+              {
+              Name: "Test2",
+              Username: "TestTwo",
+              Password: "123456",
+              Email: "test@two.com"
+              }
+            </p></td>
             <td> A text message indicating the users data was updated.</td>
           </tr>
           <tr>
