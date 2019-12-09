@@ -6,193 +6,40 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>myFlix API</title>
     <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
   </head>
   <body>
-   <div class="container">
+    <div class="container">
       <h1>myFlix API</h1>
       <p>
         myFlex API is a REST API that provides users with information about
-        movies, directors and generes. Users interact with the API via a decoupled
-        front end and can sign up, update personal information as well as create a
-        list of favourite movies.
-      </p>
-      <h3>End Points</h3>
-      <table class="highlight">
-        <thead>
-          <tr>
-            <th>Response</th>
-            <th>HTTP Method</th>
-            <th>URL</th>
-            <th>Request body data format</th>
-            <th>Response body data format</th>
-          </tr>
-        <tbody>
-          <tr>
-            <td>Get the start page</td>
-            <td>GET</td>
-            <td>/</td>
-            <td>None</td>
-            <td>A text message with the name of the API</td>
-          </tr>
-          <tr>
-            <td>Get a list of movies</td>
-            <td>GET</td>
-            <td>/movies</td>
-            <td>None</td>
-            <td>A JSON object containing data all movies</td>
-          </tr>
-          <tr>
-            <td>Get data about a single movie by title</td>
-            <td>GET</td>
-            <td>/movies/[title]</td>            
-            <td>None</td>
-            <td>
-                A JSON object with data about a single movie containing 
-                movie id, title, imageUrl, actors, realeaseyear, description, duration, 
-                genere, director and fetured properties               
-              <p>
-              { <br>
-                id: 1, 
-                movieName: "Karyasthan",
-                actor: "Dileep,Akhila,Madhu,Salim Kumar,Suraj Venjaramood,Vandana Menon", 
-                releaseyear: "2010",
-                description: "The story is set in a picturesque landscape in a village called Krishnapuram. The two tharavadu are situated in the
-                              same compound. The film begins with the celebration of onam festival by the inmates of both the houses. Krishna warrier
-                              (Madhu)'s son Raajan (Siddique)is in love with one of the girls there but his marriage is fixed with Saraswathy
-                              (Lena),daughter of the karanavar of Puthezhath. Rajan and the girl elopes. But Puthezhath people tries to stop them,but
-                              Krishnawarrier comes and rescues and also pulls him up on to the train. As years pass,Krishnanunni is born to Raajan.",
-                duration: "2:41:54",
-                genre: "Comedy",
-                director: "Dileep,Akhila",
-                featured: true
-              }
-              </p>
-            </td>
-          </tr>   
-          <tr>
-            <td>Get the data about a genre by title eg: Action, Thriller, Romance </td>
-            <td>GET</td>
-            <td>movies/genere/[name]</td>            
-            <td>None</td>
-            <td>
-              A JSON object containing genere id, title, description
+        movies, directors and generes. Users interact with the API via a
+        decoupled front end and can sign up, update personal information as well
+        as create a list of favourite movies.
+      </blockquote>
 
-              <p>
-                {
-                id: "0",
-                Name: "Action",
-                Description:
-                "Action films tend to feature a resourceful hero struggling against incredible odds, which include life-threatening
-                situations, a villain, or a pursuit which usually concludes in victory for the hero "
-                }
-              </p>
+      <blockquote>
+        To view information on API Endpoints
+        <a
+          href="https://documenter.getpostman.com/view/9595116/SW7dWSG1"
+          target="_blank"
+          >CLICK HERE
+        </a>
+      </blockquote>
 
-            </td>
-          </tr>
-          <tr>
-            <td>Get info about a director by name eg: bio, birth year, death year</td>
-            <td>GET</td>
-            <td>/movies/directors/[name]</td>           
-            <td>None</td>
-            <td>
-              A JSON object containing actor id, name, surname, bio, birth and death
-
-              <p>
-                {
-                id: "0",
-                Name: "Ridley Scott",
-                Bio:
-                " Sir Ridley Scott (born 30 November 1937)is an English filmmaker. Following his commercial breakthrough in 1979 with
-                the science fiction horror film Alien, further works include the neo-noir dystopian film Blade Runner, the road
-                adventure film Thelma & Louise, the historical drama Gladiator (which won the Academy Award for Best Picture) and the
-                science fiction film The Martian.",
-                Birth: "30/11/1937",
-                Death: ""
-                }
-              </p>
-
-            </td>
-          </tr>
-          <tr>
-            <td>Get a list of users</td>
-            <td>GET</td>
-            <td>/users</td>            
-            <td>None</td>
-            <td>A JSON object containing a list of users</td>
-          </tr>
-          <tr>
-            <td>Create a new user</td>
-            <td>POST</td>
-            <td>/user/[username]</td>            
-            <td>
-              A JSON objectect containing user name, username, password, email and fvourites.
-
-              <p>
-                {
-                Name: "Test2",
-                Username: "TestTwo",
-                Password: "123456",
-                Email: "test@two.com"
-                }
-              </p>
-            </td>
-            <td>
-              A JSON objectect containing user name, username, password, email and fvourites.
-              
-              <p>
-                {
-                id: "55",
-                Name: "Test2",
-                Username: "TestTwo",
-                Password: "123456",
-                Email: "test@two.com"
-                }
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td>Add a movie to a users favourites</td>
-            <td>POST</td>            
-            <td>/users/[username]/Movies/[MovieID]</td>            
-            <td>None</td>
-            <td>
-              A text message indicating the movie was added successfuly.
-            </td>
-          </tr>
-      
-          <tr>
-            <td>Update user information</td>
-            <td>PUT</td>
-            <td>/users/[username]</td>            
-            <td><p>
-              {
-              Name: "Test2",
-              Username: "TestTwo",
-              Password: "123456",
-              Email: "test@two.com"
-              }
-            </p></td>
-            <td> A text message indicating the users data was updated.</td>
-          </tr>
-          <tr>
-            <td>Delete a movie from favourites</td>
-            <td>DELETE</td>
-            <td>/users/[username]/[id]</td>            
-            <td>None</td>
-            <td>A text message indicating the movie was removed</td>
-          </tr>
-          <tr>
-            <td>Delete a user</td>
-            <td>DELETE</td>
-            <td>/users/[username]</td>            
-            <td>None</td>
-            <td>A text message indicating the account was deleted.</td>
-          </tr>
-        </tbody>
-        </thead>
-      </table>
-   </div>
+      <blockquote>
+        For General documentation on this application
+        <a
+          href="https://github.com/wallandall/myFlix/blob/master/README.MD"
+          target="_blank"
+        >
+          CLICK HERE
+        </a>
+      </blockquote>
+    </div>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
