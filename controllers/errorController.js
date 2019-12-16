@@ -19,6 +19,14 @@ const handleValidationErrorDB = err => {
   return new AppError(message, 400);
 };
 
+const handleJWTError = () =>
+  new AppError('Invalid token, please log in again', 401);
+
+const handleJExpiredError = () =>
+  new AppError('Your token has expired, please log in again!');
+
+const handleMongoTimeoutError = () => new AppError('DB Connection Error', 500);
+
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -39,7 +47,7 @@ const sendErrorProd = (err, res) => {
     // Programming or other unknown error: don't leak error details
   } else {
     // 1) Log error
-    console.error('ERROR: ', err);
+    console.error('ERROR ', err);
 
     // 2) Send generic message
     res.status(500).json({
@@ -50,6 +58,8 @@ const sendErrorProd = (err, res) => {
 };
 
 module.exports = (err, req, res, next) => {
+  // console.log(err.stack);
+
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
@@ -62,6 +72,10 @@ module.exports = (err, req, res, next) => {
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     if (error.name === 'ValidationError')
       error = handleValidationErrorDB(error);
+    if (error.name === 'JsonWebTokenError') error = handleJWTError(error);
+    if (error.name === 'TokenExpiredError') error = handleJExpiredError(error);
+    if (error.name === 'MongoTimeoutError')
+      error = handleMongoTimeoutError(error);
 
     sendErrorProd(error, res);
   }

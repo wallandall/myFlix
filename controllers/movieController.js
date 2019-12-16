@@ -4,6 +4,7 @@ const AppError = require('../utils/appError');
 
 exports.getAllMovies = catchAsync(async (req, res, next) => {
   const movies = await Movie.find();
+
   res.status(200).json({
     status: 'success',
     results: movies.length,
