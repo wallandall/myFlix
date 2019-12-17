@@ -25,8 +25,6 @@ const handleJWTError = () =>
 const handleJExpiredError = () =>
   new AppError('Your token has expired, please log in again!');
 
-//const handleMongoTimeoutError = () => new AppError('DB Connection Error', 500);
-
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -74,8 +72,6 @@ module.exports = (err, req, res, next) => {
       error = handleValidationErrorDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError(error);
     if (error.name === 'TokenExpiredError') error = handleJExpiredError(error);
-    // if (error.name === 'MongoTimeoutError')
-    //   error = handleMongoTimeoutError(error);
 
     sendErrorProd(error, res);
   }
