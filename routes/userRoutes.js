@@ -1,4 +1,6 @@
 const express = require('express');
+const passport = require('passport');
+require('../utils/passport');
 
 const usersController = require('../controllers/userController');
 
@@ -6,17 +8,35 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(usersController.getAllUsers)
-  .post(usersController.createUser);
+  .get(
+    passport.authenticate('jwt', { session: false }),
+    usersController.getAllUsers
+  )
+  .post(
+    passport.authenticate('jwt', { session: false }),
+    usersController.createUser
+  );
 
 router
   .route('/:id')
-  .put(usersController.updateUser)
-  .delete(usersController.deleteUser);
+  .put(
+    passport.authenticate('jwt', { session: false }),
+    usersController.updateUser
+  )
+  .delete(
+    passport.authenticate('jwt', { session: false }),
+    usersController.deleteUser
+  );
 
 router
   .route('/:user_id/movies/:movie_id')
-  .post(usersController.createFavourite)
-  .delete(usersController.deleteFavourite);
+  .post(
+    passport.authenticate('jwt', { session: false }),
+    usersController.createFavourite
+  )
+  .delete(
+    passport.authenticate('jwt', { session: false }),
+    usersController.deleteFavourite
+  );
 
 module.exports = router;
