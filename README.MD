@@ -19,7 +19,7 @@ JWT_SECRET=your_jwt_secret
 
 ## Running the API
 
-To run the application type npm start
+To run the application type: `npm start`
 
 ## Docker
 
