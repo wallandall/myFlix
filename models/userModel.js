@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
@@ -21,6 +22,14 @@ const userSchema = mongoose.Schema({
     }
   ]
 });
+
+userSchema.statics.hashedPassword = function(password) {
+  return bcrypt.hashSync(password, 10);
+};
+
+userSchema.methods.validatePassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 

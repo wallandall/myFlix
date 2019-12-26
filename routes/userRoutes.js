@@ -1,5 +1,8 @@
 const express = require('express');
 const passport = require('passport');
+
+const { userValidationRules, validate } = require('./../utils/validate');
+
 require('../utils/passport');
 
 const usersController = require('../controllers/userController');
@@ -12,15 +15,14 @@ router
     passport.authenticate('jwt', { session: false }),
     usersController.getAllUsers
   )
-  .post(
-    passport.authenticate('jwt', { session: false }),
-    usersController.createUser
-  );
+  .post(userValidationRules(), validate, usersController.createUser);
 
 router
   .route('/:id')
   .put(
     passport.authenticate('jwt', { session: false }),
+    userValidationRules(),
+    validate,
     usersController.updateUser
   )
   .delete(

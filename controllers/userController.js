@@ -14,7 +14,13 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 });
 
 exports.createUser = catchAsync(async (req, res, next) => {
-  const newUser = await User.create(req.body);
+  const hashedPassword = User.hashedPassword(req.body.password);
+  const newUser = await User.create({
+    username: req.body.username,
+    password: hashedPassword,
+    email: req.body.email,
+    birthday: req.body.burthday
+  });
 
   res.status(201).json({
     status: 'success',
@@ -25,9 +31,21 @@ exports.createUser = catchAsync(async (req, res, next) => {
 });
 
 exports.updateUser = catchAsync(async (req, res, next) => {
-  const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-    new: true
-  });
+  const hashedPassword = User.hashedPassword(req.body.password);
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        username: req.body.username,
+        password: hashedPassword,
+        email: req.body.email,
+        birthday: req.body.birthday
+      }
+    },
+    {
+      new: true
+    }
+  );
 
   if (!user) {
     return next(new AppError('Could not update user!', 404));
