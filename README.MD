@@ -2,7 +2,7 @@
 
 ## Demo
 
-To view a demo of this app, click [here](https://my-flix-tracker.herokuapp.com)
+To view a demo of this API, click [here](https://my-flix-tracker.herokuapp.com)
 
 ## Environment Variables
 
@@ -17,9 +17,7 @@ JWT_SECRET=your_jwt_secret
 
 ```
 
-## Installing
-
-## Running the program
+## Running the API
 
 To run the application type npm start
 
