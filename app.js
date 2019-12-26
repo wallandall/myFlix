@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/movies', movieRouter);
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/', authRouter);
 
 app.get('/documentation', (req, res) => {
   res.sendFile('/public/documentation.html', { root: __dirname });
