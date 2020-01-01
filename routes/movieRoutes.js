@@ -7,12 +7,7 @@ const moviesController = require('../controllers/movieController');
 
 const router = express.Router();
 
-router
-  .route('/')
-  .get(
-    passport.authenticate('jwt', { session: false }),
-    moviesController.getAllMovies
-  );
+router.route('/').get(moviesController.getAllMovies);
 router
   .route('/:title')
   .get(
