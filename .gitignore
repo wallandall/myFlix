@@ -2,10 +2,13 @@
 
 # compiled output
 /dist
+/client/dist
 /tmp
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+.cache
+/client/.cache
 
 # dependencies
 /node_modules
