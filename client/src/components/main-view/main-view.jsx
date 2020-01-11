@@ -39,6 +39,21 @@ export class MainView extends React.Component {
       });
   }
 
+  getMovies(token) {
+    axios
+      .get('https://my-flix-tracker.herokuapp.com/api/v1/movies', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(response => {
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   onMovieClick = movie => e => {
     this.setState({
       selectedMovie: movie
@@ -51,10 +66,13 @@ export class MainView extends React.Component {
     });
   }
 
-  onLoggedIn(user) {
+  onLoggedIn(authData) {
     this.setState({
-      user
+      user: authData.user.username
     });
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.username);
+    this.getMovies(authData.token);
   }
 
   onUserRegistered(user) {

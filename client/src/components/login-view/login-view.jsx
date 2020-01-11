@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -14,9 +15,18 @@ export function LoginView(props) {
   const handleSubmit = e => {
     e.preventDefault();
     console.log(username, password);
-    /* Send a request to the server for authentication */
-    /* then call props.onLoggedIn(username) */
-    props.onLoggedIn(username);
+    axios
+      .post('https://my-flix-tracker.herokuapp.com/api/v1/login', {
+        username: username,
+        password: password
+      })
+      .then(response => {
+        const data = response.data;
+        props.onLoggedIn(data);
+      })
+      .catch(e => {
+        console.log('No user found');
+      });
   };
 
   return (
