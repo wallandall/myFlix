@@ -27,7 +27,7 @@ export function RegistrationView(props) {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col xs={11} sm={8} md={6} className="form-container">
+        <Col xs={11} sm={8} md={6} className="registration-form">
           <Form>
             <Form.Group controlId="formName">
               <Form.Label>Name</Form.Label>
@@ -71,15 +71,20 @@ export function RegistrationView(props) {
             <Form.Group controlId="formDoB">
               <Form.Label>Date of Birth</Form.Label>
               <Form.Control
-                type="email"
+                type="date"
                 placeholder="Date of Birth"
                 value={birthday}
                 onChange={e => setBirthday(e.target.value)}
               />
             </Form.Group>
 
-            <Button variant="primary" size="lg" block onClick={handleSubmit}>
-              Signup
+            <Button
+              variant="outline-dark"
+              size="lg"
+              block
+              onClick={handleSubmit}
+            >
+              Create a New Account
             </Button>
           </Form>
         </Col>

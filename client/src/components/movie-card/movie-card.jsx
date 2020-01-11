@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
@@ -8,16 +10,25 @@ export class MovieCard extends React.Component {
     const { movie, onClick } = this.props;
 
     return (
-      <Card style={{ width: '16rem' }}>
-        <Card.Img variant="top" src={movie.ImagePath} />
-        <Card.Body>
-          <Card.Title>{movie.title}</Card.Title>
-          <Card.Text>{movie.description}</Card.Text>
-          <Button onClick={() => onClick()} variant="link">
-            Open
-          </Button>
-        </Card.Body>
-      </Card>
+      <div className="movie-card">
+        <Col xs={12} sm={6} md={4}>
+          <Card>
+            <Card.Img variant="top" src={movie.imagePath} />
+            <Card.Body>
+              <Card.Title>{movie.title}</Card.Title>
+              <Card.Text>{`${movie.description.substring(
+                0,
+                125
+              )}...`}</Card.Text>
+            </Card.Body>
+            <Card.Footer>
+              <Button variant="link" onClick={() => onClick()}>
+                View
+              </Button>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </div>
     );
   }
 }

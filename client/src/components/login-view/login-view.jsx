@@ -22,7 +22,7 @@ export function LoginView(props) {
   return (
     <Container>
       <Row className="justify-content-center">
-        <Col xs={11} sm={8} md={6} className="form-container">
+        <Col xs={11} sm={8} md={6} className="login-form">
           <Form>
             <Form.Group controlId="formUsername">
               <Form.Label>Username</Form.Label>
@@ -45,7 +45,7 @@ export function LoginView(props) {
             </Form.Group>
 
             <Button
-              variant="primary"
+              variant="outline-dark"
               type="submit"
               size="lg"
               block
@@ -55,12 +55,12 @@ export function LoginView(props) {
             </Button>
 
             <Button
-              variant="primary"
+              variant="outline-dark"
               size="lg"
               block
               onClick={() => props.onClick()}
             >
-              Signup
+              Create a New Account
             </Button>
           </Form>
         </Col>

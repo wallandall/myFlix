@@ -1,6 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
+import Button from 'react-bootstrap/Button';
+
 export class MovieView extends React.Component {
   constructor() {
     super();
@@ -14,43 +20,59 @@ export class MovieView extends React.Component {
     if (!movie) return null;
 
     return (
-      <div className="movie-view">
-        <img className="movie-poster" src={movie.imagePath} />
-        <div className="movie-title">
-          <span className="label">Title: </span>
-          <span className="value">{movie.title}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Description: </span>
-          <span className="value">{movie.description}</span>
-        </div>
+      <Container>
+        <Row>
+          <Col>
+            <h1>{movie.title}</h1>
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
+          <Col className="movie_image " md={4}>
+            <Image
+              width={250}
+              className="movie-poster"
+              src={movie.imagePath}
+              rounded
+            />
+          </Col>
+          <Col className="movie_description" md={6}>
+            <div>
+              <strong>Genre: </strong>
+              {movie.genre.name}
+            </div>
+            <div>
+              <strong>Creator: </strong>
+              {movie.director.name}
+            </div>
+            <div>
+              <strong>Staring: </strong>
+              {movie.actors.join(', ')}
+            </div>
 
-        <div className="movie-genre">
-          <span className="label">Genre: </span>
-          <span className="value">{movie.genre.name}</span>
-        </div>
-        <div className="movie-director">
-          <span className="label">Director: </span>
-          <span className="value">{movie.director.name}</span>
-        </div>
-        <button onClick={() => onClick()}>Back</button>
-      </div>
+            <p>{movie.description}</p>
+            <Button variant="outline-dark" onClick={() => onClick()}>
+              Back
+            </Button>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
 
 MovieView.propTypes = {
   movie: PropTypes.shape({
-    title: PropTypes.string,
-    imagePath: PropTypes.string,
-    description: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    imagePath: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    actors: PropTypes.array.isRequired,
     genre: PropTypes.exact({
       _id: PropTypes.string,
-      name: PropTypes.string,
-      description: PropTypes.string
+      name: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired
     }),
     director: PropTypes.shape({
-      name: PropTypes.string
+      name: PropTypes.string.isRequired
     })
   }).isRequired
 };

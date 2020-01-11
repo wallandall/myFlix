@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -87,20 +90,23 @@ export class MainView extends React.Component {
 
     if (!movies) return <div className="main-view" />;
 
+    if (selectedMovie)
+      return (
+        <MovieView movie={selectedMovie} onClick={() => this.onBackClick()} />
+      );
+
     return (
-      <div className="main-view">
-        {selectedMovie ? (
-          <MovieView movie={selectedMovie} onClick={() => this.onBackClick()} />
-        ) : (
-          movies.data.movies.map(movie => (
+      <Container>
+        <Row className="justify-content-center">
+          {movies.data.movies.map(movie => (
             <MovieCard
               key={movie._id}
               movie={movie}
               onClick={this.onMovieClick(movie)}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </Row>
+      </Container>
     );
   }
 }

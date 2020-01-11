@@ -1,5 +1,25 @@
-$color: steelblue;
+@import 'components//main-view/main-view.scss';
+@import 'components/movie-card/movie-card.scss';
+@import 'components/movie-view/movie-view.scss';
+@import 'components/login-view/login-view.scss';
+@import 'components/registration-view/registration-view.scss';
 
-.my-flix {
-  color: $color;
+$color-primary: #1c2127;
+$color-secondary: #000;
+$font-familiy-primary: 'Roboto', sans-serif;
+$font-familiy-secondary: 'Oswald', sans-serif;
+$font-familiy-tertiary: 'Kalam', cursive;
+
+body {
+  color: $color-primary;
+  font-family: $font-familiy-primary;
+}
+
+h1,
+h2,
+h3,
+h4,
+label {
+  font-family: $font-familiy-secondary;
+  color: #000000;
 }
