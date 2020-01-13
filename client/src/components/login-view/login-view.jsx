@@ -8,13 +8,15 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import './login-view.scss';
+
 export function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(username, password);
+
     axios
       .post('https://my-flix-tracker.herokuapp.com/api/v1/login', {
         username: username,
@@ -41,6 +43,7 @@ export function LoginView(props) {
                 placeholder="Username"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
+                required
               />
             </Form.Group>
 
@@ -51,6 +54,7 @@ export function LoginView(props) {
                 placeholder="Password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
+                required
               />
             </Form.Group>
 

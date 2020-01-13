@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
+
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,6 +10,8 @@ import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { DirectorView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
 
 import './main-view.scss';
 
@@ -17,7 +20,7 @@ export class MainView extends React.Component {
     super();
 
     this.state = {
-      movies: null,
+      movies: [],
       selectedMovie: null,
       user: null,
       newUser: false
@@ -25,18 +28,13 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    //const apiURL = "http://localhost:3000/api/v1/movies";
-    const apiURL = 'https://my-flix-tracker.herokuapp.com/api/v1/movies';
-    axios
-      .get(apiURL)
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
       });
+      this.getMovies(accessToken);
+    }
   }
 
   getMovies(token) {
@@ -75,6 +73,16 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  onLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('movies');
+    this.setState({
+      user: null
+    });
+    window.open('/', '_self');
+  }
+
   onUserRegistered(user) {
     this.setState({
       user,
@@ -91,40 +99,42 @@ export class MainView extends React.Component {
   render() {
     const { movies, selectedMovie, user, newUser } = this.state;
 
-    if (!user && newUser === false)
-      return (
-        <LoginView
-          onClick={() => this.newUser()}
-          onLoggedIn={user => this.onLoggedIn(user)}
-        />
-      );
-
-    if (newUser)
-      return (
-        <RegistrationView
-          onUserRegistered={user => this.onUserRegistered(user)}
-        />
-      );
-
     if (!movies) return <div className="main-view" />;
 
-    if (selectedMovie)
-      return (
-        <MovieView movie={selectedMovie} onClick={() => this.onBackClick()} />
-      );
-
     return (
-      <Container>
-        <Row className="justify-content-center">
-          {movies.data.movies.map(movie => (
-            <MovieCard
-              key={movie._id}
-              movie={movie}
-              onClick={this.onMovieClick(movie)}
+      <Router>
+        <Container>
+          <Row>
+            <Route
+              exact
+              path="/"
+              render={() => {
+                if (!user)
+                  return (
+                    <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                  );
+                return movies.data.movies.map(m => (
+                  <MovieCard key={m._id} movie={m} />
+                ));
+              }}
             />
-          ))}
-        </Row>
-      </Container>
+            <Route path="/register" render={() => <RegistrationView />} />
+            <Route
+              exact
+              path="/movies/:movieId"
+              render={({ match }) => (
+                <MovieView
+                  movie={movies.data.movies.find(
+                    m => m._id === match.params.movieId
+                  )}
+                />
+              )}
+            />
+            {/* <Route exact path="/genres/:name" render={<GenreView />} />
+            <Route exact path="/directors/:name" render={<DirectorView />} /> */}
+          </Row>
+        </Container>
+      </Router>
     );
   }
 }

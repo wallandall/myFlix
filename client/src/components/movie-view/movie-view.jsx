@@ -38,11 +38,15 @@ export class MovieView extends React.Component {
           <Col className="movie_description" md={6}>
             <div>
               <strong>Genre: </strong>
-              {movie.genre.name}
+              <Link to={`/genres/${movie.genre.name}`}>
+                <Button variant="link">{movie.genre.name}</Button>
+              </Link>
             </div>
             <div>
               <strong>Creator: </strong>
-              {movie.director.name}
+              <Link to={`/directors/${movie.director.name}`}>
+                <Button variant="link">{movie.director.name}</Button>
+              </Link>
             </div>
             <div>
               <strong>Staring: </strong>
