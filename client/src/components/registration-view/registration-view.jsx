@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import './registration-view.scss';
-import Axios from 'axios';
 
 export function RegistrationView(props) {
   const [name, setName] = useState('');
@@ -19,20 +18,10 @@ export function RegistrationView(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    Axios.post('https://my-flix-tracker.herokuapp.com/api/v1/users', {
-      username: username,
-      password: password,
-      email: email,
-      birthday: birthday
-    })
-      .then(response => {
-        const data = response.data;
-        console.log(data);
-        window.open('/', '_self');
-      })
-      .catch(e => {
-        console.log('Could not register user');
-      });
+    console.log(name, username, password, email, birthday);
+    /* Send a request to the server for authentication */
+    /* then call props.onLoggedIn(username) */
+    props.onUserRegistered(username);
   };
 
   return (
@@ -90,7 +79,7 @@ export function RegistrationView(props) {
             </Form.Group>
 
             <Button
-              variant="outline-dark"
+              variant="outline-light"
               size="lg"
               block
               onClick={handleSubmit}

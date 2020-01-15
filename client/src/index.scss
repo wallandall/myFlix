@@ -1,18 +1,19 @@
-@import 'components//main-view/main-view.scss';
-@import 'components/movie-card/movie-card.scss';
-@import 'components/movie-view/movie-view.scss';
-@import 'components/login-view/login-view.scss';
-@import 'components/registration-view/registration-view.scss';
-
-$color-primary: #1c2127;
-$color-secondary: #000;
+$primary-color: #03a9f4;
+$ligth-primary-color: #b3e5fc;
+$dark-primary-color: #0288d1;
+$text-icons: #fff;
+$primary-text: #212121;
+$secondary-text: #757575;
+$accent: #00bcd4;
+$divider: #bdbdbd;
 $font-familiy-primary: 'Roboto', sans-serif;
 $font-familiy-secondary: 'Oswald', sans-serif;
 $font-familiy-tertiary: 'Kalam', cursive;
 
 body {
-  color: $color-primary;
+  color: $primary-text;
   font-family: $font-familiy-primary;
+  background-color: $primary-color;
 }
 
 h1,
@@ -21,5 +22,30 @@ h3,
 h4,
 label {
   font-family: $font-familiy-secondary;
-  color: #000000;
+  color: $primary-text;
+}
+
+/*Form Controls*/
+
+.form-control {
+  color: $dark-primary-color;
+}
+
+.input {
+  color: $dark-primary-color;
+}
+
+/*Buttons*/
+
+.btn-outline-light {
+  color: $divider;
+  border-color: $divider;
+}
+
+.btn-link {
+  font-weight: 400;
+  color: $secondary-text;
+}
+
+.outline-dark {
 }

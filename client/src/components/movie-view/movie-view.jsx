@@ -7,6 +7,8 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 
+import './movie-view.scss';
+
 export class MovieView extends React.Component {
   constructor() {
     super();
@@ -38,23 +40,19 @@ export class MovieView extends React.Component {
           <Col className="movie_description" md={6}>
             <div>
               <strong>Genre: </strong>
-              <Link to={`/genres/${movie.genre.name}`}>
-                <Button variant="link">{movie.genre.name}</Button>
-              </Link>
+              {movie.genre.name}
             </div>
             <div>
               <strong>Creator: </strong>
-              <Link to={`/directors/${movie.director.name}`}>
-                <Button variant="link">{movie.director.name}</Button>
-              </Link>
+              {movie.director.name}
             </div>
             <div>
               <strong>Staring: </strong>
               {movie.actors.join(', ')}
             </div>
-
+            <hr />
             <p>{movie.description}</p>
-            <Button variant="outline-dark" onClick={() => onClick()}>
+            <Button variant="outline-light" onClick={() => onClick()}>
               Back
             </Button>
           </Col>
