@@ -12,11 +12,14 @@ export function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = useCallback(e => {
-    e.preventDefault();
-    console.log(username, password);
-    props.onLoggedIn(username);
-  });
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      console.log(username, password);
+      props.onLoggedIn(username);
+    },
+    [username, password]
+  );
 
   return (
     <Row className="justify-content-center">
