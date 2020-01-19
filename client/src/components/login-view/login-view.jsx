@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import Row from 'react-bootstrap/Row';
@@ -12,11 +12,11 @@ export function LoginView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = e => {
+  const handleSubmit = useCallback(e => {
     e.preventDefault();
     console.log(username, password);
     props.onLoggedIn(username);
-  };
+  });
 
   return (
     <Row className="justify-content-center">
