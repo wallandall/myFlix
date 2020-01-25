@@ -7,6 +7,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import './login-view.scss';
+import axios from 'axios';
+//import { response } from 'express';
 
 export function LoginView(props) {
   const [username, setUsername] = useState('');
@@ -15,8 +17,18 @@ export function LoginView(props) {
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
-      console.log(username, password);
-      props.onLoggedIn(username);
+      axios
+        .post('https://my-flix-tracker.herokuapp.com/api/v1/login', {
+          username: username,
+          password: password
+        })
+        .then(response => {
+          const data = response.data;
+          props.onLoggedIn(data);
+        })
+        .catch(e => {
+          console.log('Could not find user!');
+        });
     },
     [username, password]
   );

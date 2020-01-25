@@ -1,6 +1,11 @@
 {
-  "extends": ["airbnb", "prettier", "plugin:node/recommended"],
-  "plugins": ["prettier"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:node/recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": ["prettier", "react"],
   "rules": {
     "prettier/prettier": "error",
     "spaced-comment": "off",
