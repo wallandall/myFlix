@@ -1,10 +1,9 @@
-$primary-color: #03a9f4;
-$ligth-primary-color: #b3e5fc;
-$dark-primary-color: #0288d1;
+$primary-color: #141414;
+$light-primary-color: #221f1f;
+$dark-primary-color: #000;
 $text-icons: #fff;
-$primary-text: #212121;
-$secondary-text: #757575;
-$accent: #00bcd4;
+$primary-text: #fff;
+$secondary-text: #e50914;
 $divider: #bdbdbd;
 $font-familiy-primary: 'Roboto', sans-serif;
 $font-familiy-secondary: 'Oswald', sans-serif;
@@ -28,18 +27,19 @@ label {
 /*Form Controls*/
 
 .form-control {
-  color: $dark-primary-color;
+  color: $light-primary-color;
 }
 
 .input {
-  color: $dark-primary-color;
+  color: $light-primary-color;
 }
 
 /*Buttons*/
 
 .btn-outline-light {
-  color: $divider;
-  border-color: $divider;
+  color: $primary-text;
+  border-color: $primary-text;
+  margin-bottom: 10px;
 }
 
 .btn-link {
@@ -47,5 +47,20 @@ label {
   color: $secondary-text;
 }
 
-.outline-dark {
+.btn-link:active {
+  color: $primary-text;
+}
+.btn-link:hover {
+  color: $divider;
+}
+
+/*Navbar*/
+
+.navbar-brand {
+  color: $secondary-text !important;
+}
+
+.navbar-text,
+a {
+  color: $primary-text !important;
 }

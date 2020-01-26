@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import './registration-view.scss';
+import axios from 'axios';
 
 export function RegistrationView(props) {
   const [name, setName] = useState('');
@@ -19,10 +21,21 @@ export function RegistrationView(props) {
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
-      console.log(name, username, password, email, birthday);
-      /* Send a request to the server for authentication */
-      /* then call props.onLoggedIn(username) */
-      props.onUserRegistered(username);
+      axios
+        .post('https://my-flix-tracker.herokuapp.com/api/v1/users', {
+          username: username,
+          password: password,
+          email: email,
+          birthday: birthday
+        })
+        .then(response => {
+          const data = response.data;
+
+          window.open('/', '_self');
+        })
+        .catch(e => {
+          console.log('Could not register user!', e);
+        });
     },
     [name, username, password, email, birthday]
   );
@@ -96,6 +109,4 @@ export function RegistrationView(props) {
   );
 }
 
-RegistrationView.propTypes = {
-  onUserRegistered: PropTypes.func.isRequired
-};
+RegistrationView.propTypes = {};

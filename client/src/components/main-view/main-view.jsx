@@ -1,7 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import Navbar from 'react-bootstrap/Navbar';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -15,7 +19,7 @@ export class MainView extends React.Component {
     super();
 
     this.state = {
-      movies: null,
+      movies: [],
       selectedMovie: null,
       user: null,
       newUser: false
@@ -23,18 +27,13 @@ export class MainView extends React.Component {
   }
 
   componentDidMount() {
-    //const apiURL = "http://localhost:3000/api/v1/movies";
-    const apiURL = 'https://my-flix-tracker.herokuapp.com/api/v1/movies';
-    axios
-      .get(apiURL)
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
       });
+      this.getMovies(accessToken);
+    }
   }
 
   onMovieClick = movie => e => {
@@ -55,7 +54,7 @@ export class MainView extends React.Component {
     });
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.username);
-    this.gtMovies(authData.token);
+    this.getMovies(authData.token);
   }
 
   onUserRegistered(user) {
@@ -65,7 +64,7 @@ export class MainView extends React.Component {
     });
   }
 
-  getMovies(toekn) {
+  getMovies(token) {
     axios
       .get('https://my-flix-tracker.herokuapp.com/api/v1/movies', {
         headers: { Authorization: `Bearer ${token}` }
@@ -89,20 +88,22 @@ export class MainView extends React.Component {
   render() {
     const { movies, selectedMovie, user, newUser } = this.state;
 
-    if (!user && newUser === false)
-      return (
-        <LoginView
-          onClick={() => this.newUser()}
-          onLoggedIn={user => this.onLoggedIn(user)}
-        />
-      );
+    console.log(movies);
 
-    if (newUser)
-      return (
-        <RegistrationView
-          onUserRegistered={user => this.onUserRegistered(user)}
-        />
-      );
+    // if (!user && newUser === false)
+    //   return (
+    //     <LoginView
+    //       onClick={() => this.newUser()}
+    //       onLoggedIn={user => this.onLoggedIn(user)}
+    //     />
+    //   );
+
+    // if (newUser)
+    //   return (
+    //     <RegistrationView
+    //       onUserRegistered={user => this.onUserRegistered(user)}
+    //     />
+    //   );
 
     if (!movies) return <div className="main-view" />;
 
@@ -112,15 +113,78 @@ export class MainView extends React.Component {
       );
 
     return (
-      <Row className="justify-content-center">
-        {movies.data.movies.map(movie => (
-          <MovieCard
-            key={movie._id}
-            movie={movie}
-            onClick={this.onMovieClick(movie)}
+      <Router>
+        <div className="main-view">
+          {/* <Row className="justify-content-center"> */}
+          <Route
+            exact
+            path="/"
+            render={() => {
+              if (!user)
+                return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+
+              return movies.data.movies.map(m => (
+                <MovieCard key={m._id} movie={m} />
+              ));
+            }}
           />
-        ))}
-      </Row>
+
+          {/* </Row> */}
+          <Route path="/register" render={() => <RegistrationView />} />
+          <Route
+            path="/movies/:movieId"
+            render={({ match }) => (
+              <MovieView
+                movie={movies.data.movies.find(
+                  m => m._id === match.params.movieId
+                )}
+              />
+            )}
+          />
+          <Route
+            path="/directors/:name"
+            render={({ match }) => {
+              if (!movies) return <div className="main-view" />;
+              return (
+                <DirectorView
+                  director={
+                    movies.data.movies.find(
+                      m => m.director.name === match.params.name
+                    ).director
+                  }
+                />
+              );
+            }}
+          />
+        </div>
+      </Router>
     );
   }
+}
+//
+//
+//
+{
+  /* <Router>
+  <div className="main-view">
+    <Navbar>
+      <Navbar.Brand href="#home">MyFlix</Navbar.Brand>
+      <Navbar.Toggle />
+      <Navbar.Collapse className="justify-content-end">
+        <Navbar.Text>
+          Signed in as: <a href="#login">Mark Otto</a>
+        </Navbar.Text>
+      </Navbar.Collapse>
+    </Navbar>
+    <Row className="justify-content-center">
+      {movies.data.movies.map(movie => (
+        <MovieCard
+          key={movie._id}
+          movie={movie}
+          onClick={this.onMovieClick(movie)}
+        />
+      ))}
+    </Row>
+  </div>
+</Router>; */
 }

@@ -5,11 +5,13 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
+import { Link } from 'react-router-dom';
+
 import './movie-card.scss';
 
 export class MovieCard extends React.Component {
   render() {
-    const { movie, onClick } = this.props;
+    const { movie } = this.props;
 
     return (
       <div className="movie-card">
@@ -24,9 +26,9 @@ export class MovieCard extends React.Component {
               )}...`}</Card.Text>
             </Card.Body>
             <Card.Footer>
-              <Button variant="link" onClick={() => onClick()}>
-                View
-              </Button>
+              <Link to={`/movies/${movie._id}`}>
+                <Button variant="link">View</Button>
+              </Link>
             </Card.Footer>
           </Card>
         </Col>
@@ -40,6 +42,5 @@ MovieCard.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string.isRequired,
     imagePath: PropTypes.string.isRequired
-  }).isRequired,
-  onClick: PropTypes.func.isRequired
+  }).isRequired
 };

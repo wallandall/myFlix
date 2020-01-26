@@ -7,6 +7,8 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 
+import { Link } from 'react-router-dom';
+
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
@@ -22,14 +24,14 @@ export class MovieView extends React.Component {
     if (!movie) return null;
 
     return (
-      <Container>
+      <Container className="movie_detail">
         <Row>
           <Col>
             <h1>{movie.title}</h1>
           </Col>
         </Row>
-        <Row className="justify-content-center">
-          <Col className="movie_image " md={4}>
+        <Row>
+          <Col className=" movie_image " md={4}>
             <Image
               width={250}
               className="movie-poster"
@@ -40,11 +42,15 @@ export class MovieView extends React.Component {
           <Col className="movie_description" md={6}>
             <div>
               <strong>Genre: </strong>
-              {movie.genre.name}
+              <Link to={`/genres/${movie.genre.name}`}>
+                <Button variant="link">{movie.genre.name}</Button>
+              </Link>
             </div>
             <div>
-              <strong>Creator: </strong>
-              {movie.director.name}
+              <strong>Director: </strong>
+              <Link to={`/directors/${movie.director.name}`}>
+                <Button variant="link">{movie.director.name}</Button>
+              </Link>
             </div>
             <div>
               <strong>Staring: </strong>
@@ -52,9 +58,9 @@ export class MovieView extends React.Component {
             </div>
             <hr />
             <p>{movie.description}</p>
-            <Button variant="outline-light" onClick={() => onClick()}>
-              Back
-            </Button>
+            <Link to={`/`}>
+              <Button variant="outline-light">Back</Button>
+            </Link>
           </Col>
         </Row>
       </Container>

@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+
 import PropTypes from 'prop-types';
 
 import Row from 'react-bootstrap/Row';
@@ -6,8 +7,10 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import './login-view.scss';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import './login-view.scss';
+
 //import { response } from 'express';
 
 export function LoginView(props) {
@@ -24,10 +27,11 @@ export function LoginView(props) {
         })
         .then(response => {
           const data = response.data;
+
           props.onLoggedIn(data);
         })
         .catch(e => {
-          console.log('Could not find user!');
+          console.log('Could not find user!', e);
         });
     },
     [username, password]
@@ -67,14 +71,11 @@ export function LoginView(props) {
             Login
           </Button>
 
-          <Button
-            variant="outline-light"
-            size="lg"
-            block
-            onClick={() => props.onClick()}
-          >
-            Create a New Account
-          </Button>
+          <Link to={`/register`}>
+            <Button variant="outline-light" size="lg" block>
+              Create a New Account
+            </Button>
+          </Link>
         </Form>
       </Col>
     </Row>
@@ -82,6 +83,5 @@ export function LoginView(props) {
 }
 
 LoginView.propTypes = {
-  onLoggedIn: PropTypes.func.isRequired,
-  onClick: PropTypes.func
+  onLoggedIn: PropTypes.func.isRequired
 };
