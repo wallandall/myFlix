@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import { Link } from 'react-router-dom';
@@ -15,23 +13,13 @@ export class MovieCard extends React.Component {
 
     return (
       <div className="movie-card">
-        <Col xs={12} sm={6} md={4}>
+        <Link to={`/movies/${movie._id}`}>
           <Card>
             <Card.Img variant="top" src={movie.imagePath} />
-            <Card.Body>
-              <Card.Title>{movie.title}</Card.Title>
-              <Card.Text>{`${movie.description.substring(
-                0,
-                125
-              )}...`}</Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <Link to={`/movies/${movie._id}`}>
-                <Button variant="link">View</Button>
-              </Link>
-            </Card.Footer>
+
+            <div className="movie-card__text">{movie.title}</div>
           </Card>
-        </Col>
+        </Link>
       </div>
     );
   }

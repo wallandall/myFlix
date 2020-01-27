@@ -11,6 +11,7 @@ import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { DirectorView } from '../director-view/director-view';
 
 import './main-view.scss';
 
@@ -71,7 +72,7 @@ export class MainView extends React.Component {
       })
       .then(response => {
         this.setState({
-          movies: response.data
+          movies: response.data.data.movies
         });
       })
       .catch(function(error) {
@@ -86,24 +87,7 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, selectedMovie, user, newUser } = this.state;
-
-    console.log(movies);
-
-    // if (!user && newUser === false)
-    //   return (
-    //     <LoginView
-    //       onClick={() => this.newUser()}
-    //       onLoggedIn={user => this.onLoggedIn(user)}
-    //     />
-    //   );
-
-    // if (newUser)
-    //   return (
-    //     <RegistrationView
-    //       onUserRegistered={user => this.onUserRegistered(user)}
-    //     />
-    //   );
+    const { movies, selectedMovie, user } = this.state;
 
     if (!movies) return <div className="main-view" />;
 
@@ -115,43 +99,57 @@ export class MainView extends React.Component {
     return (
       <Router>
         <div className="main-view">
-          {/* <Row className="justify-content-center"> */}
-          <Route
-            exact
-            path="/"
-            render={() => {
-              if (!user)
-                return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+          <Row className="justify-content-center">
+            <Route
+              exact
+              path="/"
+              render={() => {
+                if (!user)
+                  return (
+                    <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                  );
 
-              return movies.data.movies.map(m => (
-                <MovieCard key={m._id} movie={m} />
-              ));
-            }}
-          />
+                return movies.map(m => <MovieCard key={m._id} movie={m} />);
+              }}
+            />
+          </Row>
 
-          {/* </Row> */}
           <Route path="/register" render={() => <RegistrationView />} />
           <Route
             path="/movies/:movieId"
             render={({ match }) => (
               <MovieView
-                movie={movies.data.movies.find(
-                  m => m._id === match.params.movieId
-                )}
+                movie={movies.find(m => m._id === match.params.movieId)}
               />
             )}
           />
           <Route
+            exact
             path="/directors/:name"
             render={({ match }) => {
               if (!movies) return <div className="main-view" />;
               return (
                 <DirectorView
                   director={
-                    movies.data.movies.find(
-                      m => m.director.name === match.params.name
-                    ).director
+                    movies.find(m => m.director.name === match.params.name)
+                      .director
                   }
+                />
+              );
+            }}
+          />
+
+          <Route
+            exact
+            path="/genres/:name"
+            render={({ match }) => {
+              if (!movies) return <div className="main-view" />;
+              return (
+                <GenreView
+                  genre={
+                    movies.find(m => m.genre.name === match.params.name).genre
+                  }
+                  movies={movies}
                 />
               );
             }}
@@ -160,31 +158,4 @@ export class MainView extends React.Component {
       </Router>
     );
   }
-}
-//
-//
-//
-{
-  /* <Router>
-  <div className="main-view">
-    <Navbar>
-      <Navbar.Brand href="#home">MyFlix</Navbar.Brand>
-      <Navbar.Toggle />
-      <Navbar.Collapse className="justify-content-end">
-        <Navbar.Text>
-          Signed in as: <a href="#login">Mark Otto</a>
-        </Navbar.Text>
-      </Navbar.Collapse>
-    </Navbar>
-    <Row className="justify-content-center">
-      {movies.data.movies.map(movie => (
-        <MovieCard
-          key={movie._id}
-          movie={movie}
-          onClick={this.onMovieClick(movie)}
-        />
-      ))}
-    </Row>
-  </div>
-</Router>; */
 }

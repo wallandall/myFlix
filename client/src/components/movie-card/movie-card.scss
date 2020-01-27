@@ -4,11 +4,59 @@ strong {
 }
 
 .movie-card {
-  margin: 5px;
+  margin-top: 10px;
+  margin-left: 10px;
+  position: relative;
+}
+
+.movie-card:hover .movie-card__text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  top: 0;
+  right: 0;
+  visibility: visible;
+  color: white;
+  background: rgba(15, 15, 15, 0.493);
+  text-align: center;
+  padding-top: 100px;
+  -webkit-animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1)
+    both;
+  animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
 
 .card {
   width: 16rem;
-  height: 42rem;
+  height: 24rem;
   background-color: $dark-primary-color;
+}
+.movie-card__text {
+  position: absolute;
+  color: #fff;
+  font-size: 30px;
+
+  font-weight: 200;
+  visibility: hidden;
+}
+
+@-webkit-keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes scale-up-center {
+  0% {
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
 }
