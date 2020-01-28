@@ -151,6 +151,7 @@ export class MainView extends React.Component {
                   genre={
                     movies.find(m => m.genre.name === match.params.name).genre
                   }
+                  movies={movies}
                 />
               );
             }}

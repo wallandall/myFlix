@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { MovieCard } from '../movie-card/movie-card';
+
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Image from 'react-bootstrap/Image';
+import Row from 'react-bootstrap/Row';
+
 import Button from 'react-bootstrap/Button';
 
 import { Link } from 'react-router-dom';
@@ -19,15 +21,40 @@ export class GenreView extends React.Component {
   }
 
   render() {
-    const { genre } = this.props;
+    const { genre, movies } = this.props;
+
+    const genreMovie = movies.map(m => {
+      if (m.genre.name === genre.name)
+        return <MovieCard key={m._id} movie={m} />;
+    });
 
     if (!genre) return null;
 
     return (
-      <Container className="genre_detail">
+      <Container className="justify-content-center ">
         <Row>
-          <h1 className="display-4">genre</h1>
+          <Col>
+            <h1 className="display-4">{genre.name}</h1>
+          </Col>
         </Row>
+        <Row>
+          <Col>
+            <p>{genre.description}</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Link to={`/`}>
+              <Button variant="outline-light">Home</Button>
+            </Link>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h1 className="display-4">{genre.name} movies</h1>
+          </Col>
+        </Row>
+        <Row>{genreMovie}</Row>
       </Container>
     );
   }

@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { MovieCard } from '../movie-card/movie-card';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -28,26 +30,16 @@ export class DirectorView extends React.Component {
     let death = director.death;
     if (death === '') death = '-';
 
-    const productions = movies.map(m => {
-      if (m.director.name === name)
-        return (
-          <Col className="production" xs={12} md={4} key={m._id}>
-            <Link to={`/movies/${m._id}`}>
-              <Image src={m.imagePath} thumbnail />
-
-              <div className="production__text">
-                <h3>{m.title}</h3>
-              </div>
-            </Link>
-            <hr className="production__hr" />
-          </Col>
-        );
+    let productions = movies.map(m => {
+      if (m.director.name === name) return <MovieCard key={m._id} movie={m} />;
     });
 
     return (
-      <Container className="director_detail">
+      <Container className="justify-content-center">
         <Row>
-          <h1>{name}</h1>
+          <Col>
+            <h1>{name}</h1>
+          </Col>
         </Row>
         <Row>
           <Col className="director_info " md={4}>
@@ -65,14 +57,16 @@ export class DirectorView extends React.Component {
               <Button variant="outline-light">Home</Button>
             </Link>
           </Col>
-          <Col className="director_bio" md={6}>
+          <Col className="director_bio" md={4}>
             <p>{bio}</p>
           </Col>
         </Row>
         <Row>
-          <h1>Movies by {name}</h1>
+          <Col>
+            <h1>Movies by {name}</h1>
+          </Col>
         </Row>
-        <Row className="justify-content-center">{productions}</Row>
+        <Row>{productions}</Row>
       </Container>
     );
   }
