@@ -12,6 +12,7 @@ import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
 
 import './main-view.scss';
 
@@ -134,6 +135,7 @@ export class MainView extends React.Component {
                     movies.find(m => m.director.name === match.params.name)
                       .director
                   }
+                  movies={movies}
                 />
               );
             }}
@@ -149,7 +151,6 @@ export class MainView extends React.Component {
                   genre={
                     movies.find(m => m.genre.name === match.params.name).genre
                   }
-                  movies={movies}
                 />
               );
             }}
