@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import Carousel from 'react-bootstrap/Carousel';
+import Image from 'react-bootstrap/Image';
 
 import { Link } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ export class DirectorView extends React.Component {
 
   render() {
     const { director, movies } = this.props;
-    console.log(movies);
+
     if (!director) return null;
     const name = director.name;
     const bio = director.bio;
@@ -28,12 +28,26 @@ export class DirectorView extends React.Component {
     let death = director.death;
     if (death === '') death = '-';
 
+    const productions = movies.map(m => {
+      if (m.director.name === name)
+        return (
+          <Col className="production" xs={12} md={4} key={m._id}>
+            <Link to={`/movies/${m._id}`}>
+              <Image src={m.imagePath} thumbnail />
+
+              <div className="production__text">
+                <h3>{m.title}</h3>
+              </div>
+            </Link>
+            <hr className="production__hr" />
+          </Col>
+        );
+    });
+
     return (
       <Container className="director_detail">
         <Row>
-          <Col>
-            <h1>{name}</h1>
-          </Col>
+          <h1>{name}</h1>
         </Row>
         <Row>
           <Col className="director_info " md={4}>
@@ -58,33 +72,7 @@ export class DirectorView extends React.Component {
         <Row>
           <h1>Movies by {name}</h1>
         </Row>
-        <Row>
-          {/* <Carousel> */}
-          {movies.map(m => {
-            if (m.director.name === director.name) {
-              return (
-                <div key={m._id}>
-                  {/* <Carousel.Item>
-                      <img
-                        className="d-block w-100"
-                        src="{m.imagePath}"
-                        alt="{m.title}"
-                      />
-                      <Carousel.Caption>
-                        <h3>{m.title}</h3>
-                        <p>
-                          Nulla vitae elit libero, a pharetra augue mollis
-                          interdum.
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item> */}
-                  {m.title} {m.imagePath}
-                </div>
-              );
-            }
-          })}
-          {/* </Carousel> */}
-        </Row>
+        <Row className="justify-content-center">{productions}</Row>
       </Container>
     );
   }

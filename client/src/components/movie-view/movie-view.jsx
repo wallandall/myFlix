@@ -59,7 +59,7 @@ export class MovieView extends React.Component {
             <hr />
             <p>{movie.description}</p>
             <Link to={`/`}>
-              <Button variant="outline-light">Back</Button>
+              <Button variant="outline-light">Home</Button>
             </Link>
           </Col>
         </Row>

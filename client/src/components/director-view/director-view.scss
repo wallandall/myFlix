@@ -1,0 +1,15 @@
+@import '../../index.scss';
+.production {
+  border-bottom: solid 5px $secondary-text;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.production__text {
+  text-align: center;
+  padding: 10px;
+}
+
+.img-thumbnail {
+  height: 20rem;
+}
