@@ -4,8 +4,6 @@ import axios from 'axios';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Navbar from 'react-bootstrap/Navbar';
 
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
@@ -13,8 +11,15 @@ import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
+import { NavigationView } from '../navigation-view/navigation-view';
+import { ProfileView } from '../profile-view/profile-view';
+
+import Nav from 'react-bootstrap/Nav';
+
+import { Link } from 'react-router-dom';
 
 import './main-view.scss';
+import { format } from 'morgan';
 
 export class MainView extends React.Component {
   constructor() {
@@ -59,6 +64,15 @@ export class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
+  onLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({
+      user: null
+    });
+    window.open('/', '_self');
+  }
+
   onUserRegistered(user) {
     this.setState({
       user,
@@ -89,7 +103,7 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, selectedMovie, user } = this.state;
-
+    console.log();
     if (!movies) return <div className="main-view" />;
 
     if (selectedMovie)
@@ -100,6 +114,7 @@ export class MainView extends React.Component {
     return (
       <Router>
         <div className="main-view">
+          <NavigationView user={user} onClick={() => this.onLogout()} />
           <Row className="justify-content-center">
             <Route
               exact
@@ -154,6 +169,13 @@ export class MainView extends React.Component {
                   movies={movies}
                 />
               );
+            }}
+          />
+
+          <Route
+            path="/profile/:user"
+            render={({ match }) => {
+              return <ProfileView user={user} />;
             }}
           />
         </div>

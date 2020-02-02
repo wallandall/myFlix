@@ -57,7 +57,7 @@ export class DirectorView extends React.Component {
               <Button variant="outline-light">Home</Button>
             </Link>
           </Col>
-          <Col className="director_bio" md={4}>
+          <Col className="director_bio" md={6}>
             <p>{bio}</p>
           </Col>
         </Row>

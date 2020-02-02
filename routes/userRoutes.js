@@ -19,6 +19,10 @@ router
 
 router
   .route('/:id')
+  .get(
+    passport.authenticate('jwt', { session: false }),
+    usersController.getUser
+  )
   .put(
     passport.authenticate('jwt', { session: false }),
     userValidationRules(),

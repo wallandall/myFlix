@@ -1,0 +1,23 @@
+@import '../../index.scss';
+
+.bg-dark {
+  background-color: $dark-primary-color !important;
+}
+
+.my-flix {
+  color: $secondary-text !important;
+  text-decoration: none !important;
+}
+.logout {
+  border: solid 2px $secondary-text;
+  border-radius: 5px;
+}
+.logout a:hover {
+  border: solid 2px green;
+  color: blue;
+}
+
+.navbar-text {
+  display: block;
+  padding: 0.5rem 1rem;
+}
