@@ -22,7 +22,7 @@ export class ProfileView extends React.Component {
     let token = localStorage.getItem('token');
 
     axios
-      .get(`https://my-flix-tracker.herokuapp.com/api/v1/users`, {
+      .get(`https://my-flix-tracker.herokuapp.com/api/v1/user`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
