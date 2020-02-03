@@ -1,0 +1,20 @@
+@import '../../index.scss';
+
+.profile {
+  margin-top: 1rem;
+  background-color: $dark-primary-color;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+
+  border-radius: 0.25rem;
+}
+
+.profile_detail {
+  padding: 10px;
+  margin: 10px;
+}
+
+.profile_edit {
+  padding: 10px;
+  margin: 10px;
+}

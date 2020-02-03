@@ -3,12 +3,11 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 exports.getUser = catchAsync(async (req, res, next) => {
-  const user = await User.findOne({ username: req.params.username });
-
+  const user = await User.findById(req.params.id);
   if (!user) {
     return next(new AppError('Could not find user!', 404));
   }
-  console.log(user);
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -31,10 +30,11 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 exports.createUser = catchAsync(async (req, res, next) => {
   const hashedPassword = User.hashedPassword(req.body.password);
   const newUser = await User.create({
+    name: req.body.name,
     username: req.body.username,
     password: hashedPassword,
     email: req.body.email,
-    birthday: req.body.burthday
+    birthday: req.body.birthday
   });
 
   res.status(201).json({
@@ -51,6 +51,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     req.params.id,
     {
       $set: {
+        name: req.body.name,
         username: req.body.username,
         password: hashedPassword,
         email: req.body.email,

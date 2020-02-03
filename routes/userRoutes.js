@@ -17,12 +17,12 @@ router
   )
   .post(userValidationRules(), validate, usersController.createUser);
 
-router
-  .route('/:username')
-  .get(
-    passport.authenticate('jwt', { session: false }),
-    usersController.getUser
-  );
+// router
+//   .route('/:user_id')
+//   .get(
+//     passport.authenticate('jwt', { session: false }),
+//     usersController.getUser
+//   );
 
 router
   .route('/:id')
