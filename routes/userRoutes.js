@@ -18,7 +18,7 @@ router
   .post(userValidationRules(), validate, usersController.createUser);
 
 router
-  .route('/:user')
+  .route('/:username')
   .get(
     passport.authenticate('jwt', { session: false }),
     usersController.getUser
