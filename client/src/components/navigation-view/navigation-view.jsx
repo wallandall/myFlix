@@ -29,7 +29,7 @@ export class NavigationView extends React.Component {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            <Link to={`/profile/${user}`}>{user}</Link>{' '}
+            <Link to={`/profile/${user}`}>My Profile</Link>{' '}
           </Navbar.Text>
           <Nav.Link onClick={() => onClick()} className="logout">
             Logout

@@ -23,6 +23,7 @@ export function RegistrationView(props) {
       e.preventDefault();
       axios
         .post('https://my-flix-tracker.herokuapp.com/api/v1/users', {
+          name: name,
           username: username,
           password: password,
           email: email,
