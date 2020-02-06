@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { MovieCard } from '../movie-card/movie-card';
 
@@ -72,11 +72,11 @@ export class DirectorView extends React.Component {
   }
 }
 
-DirectorView.propTypes = {
-  director: PropTypes.shape({
-    name: PropTypes.string,
-    bio: PropTypes.string,
-    birth: PropTypes.string,
-    death: PropTypes.string
-  })
-};
+// DirectorView.propTypes = {
+//   director: PropTypes.shape({
+//     name: PropTypes.string,
+//     bio: PropTypes.string,
+//     birth: PropTypes.string,
+//     death: PropTypes.string
+//   })
+// };

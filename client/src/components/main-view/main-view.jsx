@@ -56,7 +56,6 @@ export class MainView extends React.Component {
   }
 
   onLoggedIn(authData) {
-    console.log(authData);
     this.setState({
       user: authData.user.username
     });
@@ -104,8 +103,9 @@ export class MainView extends React.Component {
 
   render() {
     const { movies, selectedMovie, user } = this.state;
+
     console.log();
-    if (!movies) return <div className="main-view" />;
+    if (!movies && !user) return <div className="main-view" />;
 
     if (selectedMovie)
       return (
@@ -144,7 +144,8 @@ export class MainView extends React.Component {
             exact
             path="/directors/:name"
             render={({ match }) => {
-              if (!movies) return <div className="main-view" />;
+              if (!movies || movies.length === 0)
+                return <div className="main-view" />;
               return (
                 <DirectorView
                   director={
@@ -161,7 +162,8 @@ export class MainView extends React.Component {
             exact
             path="/genres/:name"
             render={({ match }) => {
-              if (!movies) return <div className="main-view" />;
+              if (!movies || movies.length === 0)
+                return <div className="main-view" />;
               return (
                 <GenreView
                   genre={

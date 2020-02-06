@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { MovieCard } from '../movie-card/movie-card';
 
@@ -60,10 +60,10 @@ export class GenreView extends React.Component {
   }
 }
 
-GenreView.propTypes = {
-  genre: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired
-  }).isRequired
-};
+// GenreView.propTypes = {
+//   genre: PropTypes.shape({
+//     _id: PropTypes.string,
+//     name: PropTypes.string.isRequired,
+//     description: PropTypes.string.isRequired
+//   }).isRequired
+// };

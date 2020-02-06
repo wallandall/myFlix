@@ -43,7 +43,3 @@ export class NavigationView extends React.Component {
 NavigationView.propTypes = {
   user: PropTypes.string
 };
-
-{
-  /* <Link to={`/profile/${user}`}></Link> */
-}
