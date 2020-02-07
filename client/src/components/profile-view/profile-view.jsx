@@ -11,8 +11,6 @@ import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import Alert from 'react-bootstrap/Alert';
 
-import Moment from 'react-moment';
-
 import { Link } from 'react-router-dom';
 
 import './profile-view.scss';
@@ -22,13 +20,14 @@ export class ProfileView extends React.Component {
     super();
     this.state = {
       name: '',
-      username: null,
-      password: null,
-      email: null,
-      birthday: null
+      username: '',
+      password: '',
+      email: '',
+      birthday: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.updateProfile = this.updateProfile.bind(this);
   }
 
   componentDidMount() {
@@ -39,16 +38,15 @@ export class ProfileView extends React.Component {
   }
 
   getProfile() {
-    let username = localStorage.getItem('user');
+    let id = localStorage.getItem('user');
     let token = localStorage.getItem('token');
 
     axios
-      .get(`https://my-flix-tracker.herokuapp.com/api/v1/users/${username}`, {
+      .get(`https://my-flix-tracker.herokuapp.com/api/v1/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
         this.setState({
-          profile: response.data.data.user,
           name: response.data.data.user.name,
           username: response.data.data.user.username,
           password: response.data.data.user.password,
@@ -61,20 +59,13 @@ export class ProfileView extends React.Component {
       });
   }
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-
   deleteProfile() {
-    let username = localStorage.getItem('user');
+    let id = localStorage.getItem('user');
     let token = localStorage.getItem('token');
     axios
-      .delete(
-        `https://my-flix-tracker.herokuapp.com/api/v1/users/${username}`,
-        {
-          headers: { Authorization: `Bearer ${token}` }
-        }
-      )
+      .delete(`https://my-flix-tracker.herokuapp.com/api/v1/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
       .then(response => {
         alert('Your Account has been deleted!');
         localStorage.removeItem('token');
@@ -86,30 +77,37 @@ export class ProfileView extends React.Component {
       });
   }
 
-  updateProfile() {
+  handleChange(event) {
+    this.setState({ name: event.target.value });
+  }
+
+  updateProfile(event) {
+    let id = localStorage.getItem('user');
+    let token = localStorage.getItem('token');
+
+    event.preventDefault();
+
     axios
       .put(
-        `https://my-flix-tracker.herokuapp.com/api/v1/users/${localStorage.getItem(
-          'user'
-        )}`,
+        `https://my-flix-tracker.herokuapp.com/api/v1/users/${id}`,
         {
-          username: username,
-          password: password,
-          birthday: birthday,
-          email: email
+          name: this.state.name,
+          username: this.state.username,
+          password: this.state.password,
+          email: this.state.email,
+          birthday: this.state.birthday
         },
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${token}` }
         }
       )
-      .then(res => {
-        const data = res.data;
-        alert('Your profile data was updated successfully');
-        localStorage.setItem('user', data.Username);
-        window.open(`/users/${localStorage.getItem('user')}`);
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+        window.open(`/users/${username}`);
       })
-      .catch(error => {
-        alert('error updating user ' + error);
+      .catch(event => {
+        alert('Could not delete profile');
       });
   }
 
@@ -153,13 +151,6 @@ export class ProfileView extends React.Component {
                       <p>
                         <strong>Date of Birth:</strong> {birthday}
                       </p>
-                      <p>
-                        <strong>Age:</strong>{' '}
-                        <Moment fromNow ago>
-                          {birthday}
-                        </Moment>{' '}
-                        old
-                      </p>
                     </Tab.Pane>
                     <Tab.Pane eventKey="second">
                       <h3>Edit Profile </h3>
@@ -175,13 +166,23 @@ export class ProfileView extends React.Component {
                           />
                         </Form.Group>
 
+                        <Form.Group controlId="formUserName">
+                          <Form.Label>Username</Form.Label>
+                          <Form.Control
+                            type="text"
+                            placeholder="Username"
+                            readOnly={true}
+                            disabled={true}
+                            value={this.state.username}
+                          />
+                        </Form.Group>
+
                         <Form.Group controlId="formPassword">
                           <Form.Label>Password</Form.Label>
                           <Form.Control
                             type="password"
                             placeholder="Password"
-                            // value={password}
-                            onChange={e => setPassword(e.target.value)}
+                            ref={this.input}
                           />
                         </Form.Group>
                         <Form.Group controlId="formEmail">
@@ -189,8 +190,8 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="email"
                             placeholder="Email Address"
-                            value={this.state.email || ''}
-                            onChange={e => setEmail(e.target.value)}
+                            defaultValue={email}
+                            ref={this.input}
                           />
                         </Form.Group>
                         <Form.Group controlId="formDoB">
@@ -198,8 +199,8 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="date"
                             placeholder="Date of Birth"
-                            value={this.state.birthday || ''}
-                            onChange={e => setBirthday(e.target.value)}
+                            defaultValue={birthday}
+                            ref={this.input}
                           />
                         </Form.Group>
                         <Button

@@ -33,6 +33,11 @@ label {
 .input {
   color: $light-primary-color;
 }
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: $divider;
+  opacity: 0.5;
+}
 
 /*Buttons*/
 
