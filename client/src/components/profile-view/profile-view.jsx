@@ -23,7 +23,9 @@ export class ProfileView extends React.Component {
       username: '',
       password: '',
       email: '',
-      birthday: ''
+      birthday: '',
+      favourites: [],
+      movies: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -51,7 +53,8 @@ export class ProfileView extends React.Component {
           username: response.data.data.user.username,
           password: response.data.data.user.password,
           email: response.data.data.user.email,
-          birthday: response.data.data.user.birthday.substring(0, 10)
+          birthday: response.data.data.user.birthday.substring(0, 10),
+          favourites: response.data.data.user.favoriteMovies
         });
       })
       .catch(function(error) {
@@ -77,9 +80,12 @@ export class ProfileView extends React.Component {
       });
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-    console.log(event.target.name);
+  handleChange(key) {
+    return function(e) {
+      var state = {};
+      state[key] = e.target.value;
+      this.setState(state);
+    }.bind(this);
   }
 
   updateProfile(event) {
@@ -104,19 +110,50 @@ export class ProfileView extends React.Component {
       )
       .then(response => {
         const data = response.data;
-        console.log(data);
-        props.onLoggedIn(data);
-        // window.open(`/users/${username}`);
 
-        // window.open('/', '_self');
+        document.location.reload(true);
       })
       .catch(event => {
-        alert('Could not edit profile');
+        alert('Could not edit profile. Error: ' + event);
       });
   }
 
+  deleteFavorite(movieId) {
+    axios
+      .delete(
+        `https://my-flix-tracker.herokuapp.com/api/v1/users/${localStorage.getItem(
+          'user'
+        )}/movies/${movieId}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        }
+      )
+      .then(res => {
+        document.location.reload(true);
+      })
+      .then(res => {
+        alert('Movie successfully deleted from your favorites');
+      })
+
+      .catch(e => {
+        alert('Movie could not be deleted from your favorites ' + e);
+      });
+  }
   render() {
-    const { name, username, password, email, birthday } = this.state;
+    const {
+      name,
+      username,
+      password,
+      email,
+      birthday,
+      favourites
+    } = this.state;
+
+    const { movie } = this.props;
+    const favoriteList = this.props.movies.filter(m =>
+      this.state.favourites.includes(m._id)
+    );
+    console.log(favoriteList);
 
     return (
       <Container className="profile">
@@ -138,7 +175,10 @@ export class ProfileView extends React.Component {
                       <Nav.Link eventKey="second">Update Profile</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link eventKey="third">Delete Profile</Nav.Link>
+                      <Nav.Link eventKey="third">Favourite Movies</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link eventKey="fourth">Delete Profile</Nav.Link>
                     </Nav.Item>
                   </Nav>
                 </Col>
@@ -165,8 +205,8 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="text"
                             placeholder="Name"
-                            defaultValue={name}
-                            onChange={this.handleChange}
+                            value={this.state.name}
+                            onChange={this.handleChange('name')}
                           />
                         </Form.Group>
 
@@ -177,7 +217,7 @@ export class ProfileView extends React.Component {
                             placeholder="Username"
                             readOnly={true}
                             disabled={true}
-                            value={username}
+                            value={this.state.username}
                             onChange={this.handleChange}
                           />
                         </Form.Group>
@@ -187,7 +227,7 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="password"
                             placeholder="Password"
-                            onChange={this.handleChange}
+                            onChange={this.handleChange('password')}
                           />
                         </Form.Group>
                         <Form.Group controlId="formEmail">
@@ -195,8 +235,8 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="email"
                             placeholder="Email Address"
-                            defaultValue={email}
-                            onChange={this.handleChange}
+                            value={this.state.email}
+                            onChange={this.handleChange('email')}
                           />
                         </Form.Group>
                         <Form.Group controlId="formDoB">
@@ -204,8 +244,8 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="date"
                             placeholder="Date of Birth"
-                            defaultValue={this.state.birthday}
-                            onChange={this.handleChange}
+                            value={this.state.birthday}
+                            onChange={this.handleChange('birthday')}
                           />
                         </Form.Group>
                         <Button
@@ -219,6 +259,23 @@ export class ProfileView extends React.Component {
                       </Form>
                     </Tab.Pane>
                     <Tab.Pane eventKey="third">
+                      <h3>Favourite Movies</h3>
+
+                      {favoriteList.map(m => (
+                        <div key={m._id} className="fav-movies-button">
+                          <Button
+                            variant="outline-light"
+                            onClick={e => this.deleteFavorite(m._id)}
+                          >
+                            Remove Favorite
+                          </Button>
+                          <Link to={`/movies/${m._id}`}>
+                            <Button variant="link">{m.title}</Button>
+                          </Link>
+                        </div>
+                      ))}
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="fourth">
                       <h3>Delete Profile </h3>
                       <Alert variant="danger">
                         Warning: Clicking on delete will permanently your
@@ -240,11 +297,6 @@ export class ProfileView extends React.Component {
             <Link to={`/`}>
               <Button variant="outline-light">Home</Button>
             </Link>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h1>Favourite Movies</h1>
           </Col>
         </Row>
       </Container>

@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import PropTypes from 'prop-types';
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Row from 'react-bootstrap/Row';
@@ -178,7 +180,7 @@ export class MainView extends React.Component {
           <Route
             path="/profile/:user"
             render={({ match }) => {
-              return <ProfileView user={user} />;
+              return <ProfileView user={user} movies={movies} />;
             }}
           />
         </div>
