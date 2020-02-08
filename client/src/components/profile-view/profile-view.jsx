@@ -78,7 +78,8 @@ export class ProfileView extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({ name: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
+    console.log(event.target.name);
   }
 
   updateProfile(event) {
@@ -104,10 +105,13 @@ export class ProfileView extends React.Component {
       .then(response => {
         const data = response.data;
         console.log(data);
-        window.open(`/users/${username}`);
+        props.onLoggedIn(data);
+        // window.open(`/users/${username}`);
+
+        // window.open('/', '_self');
       })
       .catch(event => {
-        alert('Could not delete profile');
+        alert('Could not edit profile');
       });
   }
 
@@ -161,7 +165,7 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="text"
                             placeholder="Name"
-                            value={this.state.name}
+                            defaultValue={name}
                             onChange={this.handleChange}
                           />
                         </Form.Group>
@@ -173,7 +177,8 @@ export class ProfileView extends React.Component {
                             placeholder="Username"
                             readOnly={true}
                             disabled={true}
-                            value={this.state.username}
+                            value={username}
+                            onChange={this.handleChange}
                           />
                         </Form.Group>
 
@@ -182,7 +187,7 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="password"
                             placeholder="Password"
-                            ref={this.input}
+                            onChange={this.handleChange}
                           />
                         </Form.Group>
                         <Form.Group controlId="formEmail">
@@ -191,7 +196,7 @@ export class ProfileView extends React.Component {
                             type="email"
                             placeholder="Email Address"
                             defaultValue={email}
-                            ref={this.input}
+                            onChange={this.handleChange}
                           />
                         </Form.Group>
                         <Form.Group controlId="formDoB">
@@ -199,8 +204,8 @@ export class ProfileView extends React.Component {
                           <Form.Control
                             type="date"
                             placeholder="Date of Birth"
-                            defaultValue={birthday}
-                            ref={this.input}
+                            defaultValue={this.state.birthday}
+                            onChange={this.handleChange}
                           />
                         </Form.Group>
                         <Button
