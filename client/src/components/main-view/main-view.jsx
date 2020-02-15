@@ -1,12 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
+import { setMovies } from '../../actions/actions';
+
 import Row from 'react-bootstrap/Row';
 
+import MoviesList from '../movies-list/movies-list';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
 import { MovieCard } from '../movie-card/movie-card';
@@ -28,7 +31,7 @@ export class MainView extends React.Component {
     super();
 
     this.state = {
-      movies: [],
+      movies: null,
       selectedMovie: null,
       user: null,
       newUser: false
@@ -88,9 +91,8 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        this.setState({
-          movies: response.data.data.movies
-        });
+        console.log(response.data.data);
+        this.props.setMovies(response.data.data.movies);
       })
       .catch(function(error) {
         console.log(error);
@@ -104,7 +106,9 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const { movies, selectedMovie, user } = this.state;
+    const { selectedMovie, user } = this.state;
+    let { movies } = this.props;
+    console.log(movies);
 
     console.log();
     if (!movies && !user) return <div className="main-view" />;
@@ -127,7 +131,7 @@ export class MainView extends React.Component {
                   return (
                     <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
                   );
-
+                console.log('Movies :' + movies);
                 return movies.map(m => <MovieCard key={m._id} movie={m} />);
               }}
             />
@@ -188,3 +192,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = state => {
+  return { movies: state.movies };
+};
+
+export default connect(mapStateToProps, { setMovies })(MainView);
