@@ -19,10 +19,6 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
-  res.send('myFlix API');
-});
-
 app.use('/', express.static(path.join(__dirname, 'client', 'dist')));
 app.use(express.static('public'));
 app.get('/*', (req, res) => {
