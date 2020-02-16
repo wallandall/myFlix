@@ -104,7 +104,7 @@ export class MainView extends React.Component {
     const { selectedMovie, user } = this.state;
     let { movies, userProfile } = this.props;
 
-    if (!movies && !user) return <div className="main-view" />;
+    if (!movies && !userProfile) return <div className="main-view" />;
 
     if (selectedMovie)
       return (
@@ -115,7 +115,15 @@ export class MainView extends React.Component {
       <Router basename="/client">
         <NavigationView user={user} onClick={() => this.onLogout()} />
         <div className="main-view">
-          <Route exact path="/" render={() => <MoviesList movies={movies} />} />
+          <Route
+            exact
+            path="/"
+            render={() => {
+              if (!user)
+                return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              <MoviesList movies={movies} />;
+            }}
+          />
 
           <Route path="/register" render={() => <RegistrationView />} />
           <Route
