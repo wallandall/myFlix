@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -35,45 +37,49 @@ export function LoginView(props) {
   );
 
   return (
-    <Col xs={11} sm={8} md={6} className="login-form">
-      <Form>
-        <Form.Group controlId="formUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-        </Form.Group>
+    <Container>
+      <Row className="justify-content-center">
+        <Col xs={11} sm={8} md={6} className="login-form">
+          <Form>
+            <Form.Group controlId="formUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={e => setUsername(e.target.value)}
+              />
+            </Form.Group>
 
-        <Form.Group controlId="formPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </Form.Group>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </Form.Group>
 
-        <Button
-          variant="outline-light"
-          type="submit"
-          size="lg"
-          block
-          onClick={handleSubmit}
-        >
-          Login
-        </Button>
+            <Button
+              variant="outline-light"
+              type="submit"
+              size="lg"
+              block
+              onClick={handleSubmit}
+            >
+              Login
+            </Button>
 
-        <Link to={`/register`}>
-          <Button variant="outline-light" size="lg" block>
-            Create a New Account
-          </Button>
-        </Link>
-      </Form>
-    </Col>
+            <Link to={`/register`}>
+              <Button variant="outline-light" size="lg" block>
+                Create a New Account
+              </Button>
+            </Link>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
