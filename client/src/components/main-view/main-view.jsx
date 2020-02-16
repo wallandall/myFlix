@@ -112,7 +112,7 @@ export class MainView extends React.Component {
       );
 
     return (
-      <Router>
+      <Router basename="/client">
         <NavigationView user={user} onClick={() => this.onLogout()} />
         <div className="main-view">
           <Route exact path="/" render={() => <MoviesList movies={movies} />} />

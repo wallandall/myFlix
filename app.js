@@ -19,10 +19,13 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use('/', express.static(path.join(__dirname, 'client', 'dist')));
-app.use(express.static('public'));
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+// app.get('/', (req, res) => {
+//   res.send('myFlix API');
+// });
+
+app.use('/client', express.static(path.join(__dirname, 'client', 'dist')));
+app.get('/client/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
 });
 app.use('/api/v1/movies', movieRouter);
 app.use('/api/v1/users', userRouter);
