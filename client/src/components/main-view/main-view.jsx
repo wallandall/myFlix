@@ -71,7 +71,7 @@ export class MainView extends React.Component {
     this.setState({
       user: null
     });
-    window.open('/', '_self');
+    window.open('/client', '_self');
   }
 
   onUserRegistered(user) {
@@ -175,19 +175,6 @@ export class MainView extends React.Component {
               return <ProfileView userProfile={userProfile} movies={movies} />;
             }}
           />
-
-          {/* <Route
-              exact
-              path="/"
-              render={() => {
-                if (!user)
-                  return (
-                    <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-                  );
-
-                return movies.map(m => <MovieCard key={m._id} movie={m} />);
-              }}
-            /> */}
         </div>
       </Router>
     );
