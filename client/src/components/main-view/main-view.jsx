@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUser } from '../../actions/actions';
 
 import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 
 import MoviesList from '../movies-list/movies-list';
 import { LoginView } from '../login-view/login-view';
@@ -19,19 +20,13 @@ import { GenreView } from '../genre-view/genre-view';
 import { NavigationView } from '../navigation-view/navigation-view';
 import { ProfileView } from '../profile-view/profile-view';
 
-import Nav from 'react-bootstrap/Nav';
-
-import { Link } from 'react-router-dom';
-
 import './main-view.scss';
-import { format } from 'morgan';
 
 export class MainView extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      movies: null,
       selectedMovie: null,
       user: null,
       newUser: false
@@ -64,6 +59,7 @@ export class MainView extends React.Component {
     this.setState({
       user: authData.user.username
     });
+    this.props.setUser(authData.user);
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user._id);
     this.getMovies(authData.token);
@@ -91,7 +87,6 @@ export class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        console.log(response.data.data);
         this.props.setMovies(response.data.data.movies);
       })
       .catch(function(error) {
@@ -107,11 +102,9 @@ export class MainView extends React.Component {
 
   render() {
     const { selectedMovie, user } = this.state;
-    let { movies } = this.props;
-    console.log(movies);
+    let { movies, userProfile } = this.props;
 
-    console.log();
-    if (!movies && !user) return <div className="main-view" />;
+    if (!movies && !userProfile) return <div className="main-view" />;
 
     if (selectedMovie)
       return (
@@ -120,22 +113,9 @@ export class MainView extends React.Component {
 
     return (
       <Router>
+        <NavigationView user={user} onClick={() => this.onLogout()} />
         <div className="main-view">
-          <NavigationView user={user} onClick={() => this.onLogout()} />
-          <Row className="justify-content-center">
-            <Route
-              exact
-              path="/"
-              render={() => {
-                if (!user)
-                  return (
-                    <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
-                  );
-                console.log('Movies :' + movies);
-                return movies.map(m => <MovieCard key={m._id} movie={m} />);
-              }}
-            />
-          </Row>
+          <Route exact path="/" render={() => <MoviesList movies={movies} />} />
 
           <Route path="/register" render={() => <RegistrationView />} />
           <Route
@@ -184,9 +164,22 @@ export class MainView extends React.Component {
           <Route
             path="/profile/:user"
             render={({ match }) => {
-              return <ProfileView user={user} movies={movies} />;
+              return <ProfileView userProfile={userProfile} movies={movies} />;
             }}
           />
+
+          {/* <Route
+              exact
+              path="/"
+              render={() => {
+                if (!user)
+                  return (
+                    <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+                  );
+
+                return movies.map(m => <MovieCard key={m._id} movie={m} />);
+              }}
+            /> */}
         </div>
       </Router>
     );
@@ -194,7 +187,12 @@ export class MainView extends React.Component {
 }
 
 let mapStateToProps = state => {
-  return { movies: state.movies };
+  return { movies: state.movies, userProfile: state.userProfile };
 };
 
-export default connect(mapStateToProps, { setMovies })(MainView);
+const mapDispatchToProps = {
+  setMovies,
+  setUser
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);

@@ -149,11 +149,10 @@ export class ProfileView extends React.Component {
       favourites
     } = this.state;
 
-    const { movie } = this.props;
+    const { movie, userProfile } = this.props;
     const favoriteList = this.props.movies.filter(m =>
       this.state.favourites.includes(m._id)
     );
-    console.log(favoriteList);
 
     return (
       <Container className="profile">

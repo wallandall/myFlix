@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -22,6 +23,11 @@ app.get('/', (req, res) => {
   res.send('myFlix API');
 });
 
+app.use('/', express.static(path.join(__dirname, 'client', 'dist')));
+app.use(express.static('public'));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 app.use('/api/v1/movies', movieRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/', authRouter);
