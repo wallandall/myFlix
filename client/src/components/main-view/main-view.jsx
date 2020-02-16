@@ -104,7 +104,7 @@ export class MainView extends React.Component {
     const { selectedMovie, user } = this.state;
     let { movies, userProfile } = this.props;
 
-    if (!movies && !userProfile) return <div className="main-view" />;
+    if (!movies && !user) return <div className="main-view" />;
 
     if (selectedMovie)
       return (
